@@ -92,6 +92,23 @@ async function createComment(req, res) {
   }
 }
 
+async function deleteComment(req, res) {
+  try {
+    const blog = await Blog.findById(req.params.blogId)
+    const comment = blog.comments.id(req.params.commentId)
+    if (comment.author.equals(req.user.profile)) {
+      blog.comments.remove({ _id: req.params.commentId })
+      await blog.save()
+      res.status(200).json(blog)
+    } else {
+      res.status(500).json({error: 'Not Authorized'})
+    }
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
+  }
+}
+
 export {
   create,
   index,
@@ -99,5 +116,6 @@ export {
   update,
   deleteBlog as delete,
   createComment,
+  deleteComment,
 
 }
