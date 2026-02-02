@@ -12,6 +12,7 @@ router.get('/', checkAuth, blogsCtrl.index)
 router.get('/:blogId', checkAuth, blogsCtrl.show)
 router.put('/:blogId', checkAuth, blogsCtrl.update)
 router.post('/', checkAuth, blogsCtrl.create)
+router.delete('/:blogId', checkAuth, blogsCtrl.delete)
 
 
 export { 
